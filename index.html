@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Automation Idea Desk</title>
+  <meta name="description" content="Submit an idea for automating a repetitive task and track its status.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='2' width='28' height='28' fill='%23ffd23f' stroke='%23141414' stroke-width='3'/><text x='16' y='22' font-family='monospace' font-size='15' font-weight='700' text-anchor='middle' fill='%23141414'>AI</text></svg>">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">AI</span>Idea Desk</a>
+      <nav class="nav" aria-label="Main">
+        <a class="nav-text" href="#board">Idea board</a>
+        <a class="btn btn--sm" href="submit.html">Submit idea</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <span class="kicker">Intake open</span>
+          <h1 class="display">That task you do <mark>every week</mark> by hand? Let's retire it.</h1>
+          <p class="lede">
+            Congratulations: noticing <strong>"there has to be a better way"</strong> is the hardest step,
+            and you've already taken it. Every automation that saves a team hours started with someone
+            like you writing it down. Tell us about yours, and an AI interviewer will help you turn it into
+            a clear request in about five minutes.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn--lg" href="submit.html">Submit an idea <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn--plain btn--lg" href="#board">See all ideas</a>
+          </div>
+        </div>
+
+        <aside class="ticket" aria-label="How it works">
+          <div class="ticket-head">
+            <span class="label">Work order · how it works</span>
+            <span class="label">3 steps</span>
+          </div>
+          <ol class="ticket-steps">
+            <li><div><b>Talk it through</b><span>An AI interviewer asks a few plain questions about your task.</span></div></li>
+            <li><div><b>Paste the summary</b><span>It writes up the requirements; you paste them back and check them.</span></div></li>
+            <li><div><b>Track it here</b><span>Your idea gets an ID and a status you can follow on the board.</span></div></li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section class="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="contact-card">
+          <img id="gh-avatar" src="" alt="" width="64" height="64">
+          <div>
+            <h2 id="contact-title">Not sure if your idea fits? Got a suggestion?</h2>
+            <p>No idea is too small or too rough. Reach out on GitHub and we'll figure it out together.</p>
+          </div>
+          <a class="btn" id="gh-link" href="#" target="_blank" rel="noopener">Contact me on GitHub <span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="hazard" aria-hidden="true"></div>
+
+    <section class="section" id="board" aria-labelledby="board-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="label" id="board-count">Loading…</span>
+            <h2 id="board-title">The idea board</h2>
+          </div>
+          <div class="controls">
+            <label class="field-inline">
+              <span class="visually-hidden">Search ideas</span>
+              <span aria-hidden="true">⌕</span>
+              <input type="search" id="search" placeholder="Search title, ID or status">
+            </label>
+            <div class="toggle" role="group" aria-label="Filter ideas">
+              <button type="button" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-filter="mine" aria-pressed="false">Mine</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="board">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Status</th>
+                <th scope="col"><span class="visually-hidden">Open</span></th>
+              </tr>
+            </thead>
+            <tbody id="board-body">
+              <tr class="skeleton-row"><td colspan="5"><span style="width:70%"></span></td></tr>
+              <tr class="skeleton-row"><td colspan="5"><span style="width:55%"></span></td></tr>
+              <tr class="skeleton-row"><td colspan="5"><span style="width:62%"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="board-notice"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span class="label">Automation Idea Desk</span>
+      <span class="label">Ideas and names on this board are public</span>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/index.js"></script>
+</body>
+</html>

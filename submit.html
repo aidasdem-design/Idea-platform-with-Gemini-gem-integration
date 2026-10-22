@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submit an Idea</title>
+  <meta name="description" content="Describe your automation idea with an AI interviewer and submit it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='2' width='28' height='28' fill='%23ffd23f' stroke='%23141414' stroke-width='3'/><text x='16' y='22' font-family='monospace' font-size='15' font-weight='700' text-anchor='middle' fill='%23141414'>AI</text></svg>">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">AI</span>Idea Desk</a>
+      <nav class="nav" aria-label="Main">
+        <a class="nav-text" href="./#board">Idea board</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <div class="wrap">
+        <span class="label">New work order</span>
+        <h1 class="display">Let's write up <mark>your idea</mark>.</h1>
+        <p class="lede">Four short steps. An AI interviewer does the heavy lifting: you just answer its questions and paste back what it writes.</p>
+      </div>
+    </section>
+
+    <form class="wrap steps-layout" id="idea-form" novalidate>
+      <ol class="step-rail" aria-label="Progress">
+        <li data-rail="1"><span class="num"><span>1</span></span>Your name</li>
+        <li data-rail="2"><span class="num"><span>2</span></span>AI interview</li>
+        <li data-rail="3"><span class="num"><span>3</span></span>Paste summary</li>
+        <li data-rail="4"><span class="num"><span>4</span></span>Review &amp; submit</li>
+      </ol>
+
+      <div>
+        <!-- Step 1 -->
+        <section class="step" id="step-1" aria-labelledby="s1-title">
+          <div class="step-head"><span class="num">01</span><h2 id="s1-title">Who's submitting?</h2></div>
+          <div class="step-body">
+            <div class="grid-2">
+              <div class="field">
+                <label class="label" for="firstName">First name <span class="req">Required</span></label>
+                <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+              </div>
+              <div class="field">
+                <label class="label" for="surname">Surname <span class="req">Required</span></label>
+                <input type="text" id="surname" name="surname" autocomplete="family-name" required>
+              </div>
+            </div>
+            <div class="honeypot" aria-hidden="true">
+              <label for="website">Leave this empty</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section class="step" id="step-2" aria-labelledby="s2-title">
+          <div class="step-head"><span class="num">02</span><h2 id="s2-title">Talk it through with an AI</h2></div>
+          <div class="step-body">
+            <p>Pick the AI assistant you normally use. It opens in a new tab with the interview ready to go, asks you a few questions, then writes a summary for you to copy.</p>
+            <div class="ai-buttons" id="ai-buttons">
+              <a class="btn btn--ink" id="open-chatgpt" href="#" target="_blank" rel="noopener">Open in ChatGPT <span class="arrow" aria-hidden="true">↗</span></a>
+              <a class="btn btn--ink" id="open-claude" href="#" target="_blank" rel="noopener">Open in Claude <span class="arrow" aria-hidden="true">↗</span></a>
+            </div>
+            <div class="copy-flow">
+              <div><button type="button" class="btn btn--plain" id="copy-prompt">Copy interview prompt</button></div>
+              <div class="links hint">
+                <span>Using something else? Copy the prompt, then paste it into</span>
+                <a href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini ↗</a>
+                <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot ↗</a>
+                <span>or any other assistant.</span>
+              </div>
+            </div>
+            <details class="prompt-peek">
+              <summary>See what the prompt says</summary>
+              <pre id="prompt-text"></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section class="step" id="step-3" aria-labelledby="s3-title">
+          <div class="step-head"><span class="num">03</span><h2 id="s3-title">Paste the summary</h2></div>
+          <div class="step-body paste-box">
+            <p>When the AI gives you the block starting with <code>=== IDEA SUMMARY ===</code>, copy all of it and paste it here. The fields below fill in automatically.</p>
+            <label class="visually-hidden" for="paste">Paste the AI summary</label>
+            <textarea id="paste" placeholder="=== IDEA SUMMARY ===&#10;Title: …&#10;Problem: …&#10;…&#10;=== END ==="></textarea>
+            <p class="parse-status" id="parse-status" role="status" aria-live="polite"></p>
+            <p class="hint">Rather skip the AI? Just fill in the fields in step 4 yourself.</p>
+          </div>
+        </section>
+
+        <!-- Step 4 -->
+        <section class="step" id="step-4" aria-labelledby="s4-title">
+          <div class="step-head"><span class="num">04</span><h2 id="s4-title">Review &amp; edit</h2></div>
+          <div class="step-body">
+            <div class="field">
+              <label class="label" for="title">Title <span class="req">Required</span></label>
+              <input type="text" id="title" name="title" maxlength="120" required>
+            </div>
+            <div class="field">
+              <label class="label" for="problem">Problem <span class="req">Required</span></label>
+              <textarea id="problem" name="problem" required></textarea>
+            </div>
+            <div class="field">
+              <label class="label" for="requirements">Requirements <span>One per line</span></label>
+              <textarea id="requirements" name="requirements" rows="5"></textarea>
+            </div>
+
+            <span class="label">Process map (SIPOC)</span>
+            <div class="sipoc">
+              <div class="sipoc-col">
+                <header><b>S</b><small><label for="suppliers">Suppliers</label></small></header>
+                <textarea id="suppliers" name="suppliers" placeholder="Who or what provides the starting material"></textarea>
+              </div>
+              <div class="sipoc-col">
+                <header><b>I</b><small><label for="inputs">Inputs</label></small></header>
+                <textarea id="inputs" name="inputs" placeholder="Information, files or requests needed"></textarea>
+              </div>
+              <div class="sipoc-col">
+                <header><b>P</b><small><label for="process">Process</label></small></header>
+                <textarea id="process" name="process" placeholder="1. First step&#10;2. Next step"></textarea>
+              </div>
+              <div class="sipoc-col">
+                <header><b>O</b><small><label for="outputs">Outputs</label></small></header>
+                <textarea id="outputs" name="outputs" placeholder="What the process produces"></textarea>
+              </div>
+              <div class="sipoc-col">
+                <header><b>C</b><small><label for="customers">Customers</label></small></header>
+                <textarea id="customers" name="customers" placeholder="Who receives or benefits"></textarea>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="frequency">Frequency &amp; time spent</label>
+              <input type="text" id="frequency" name="frequency" placeholder="e.g. Weekly, about 2 hours, 3 people">
+            </div>
+          </div>
+        </section>
+      </div>
+    </form>
+  </main>
+
+  <div class="submit-bar">
+    <div class="wrap">
+      <p id="submit-note">Heads up: your name and idea will be visible on the public idea board.</p>
+      <button type="submit" form="idea-form" class="btn btn--lg" id="submit-btn">Submit idea <span class="arrow" aria-hidden="true">→</span></button>
+    </div>
+  </div>
+
+  <script type="module" src="assets/js/submit.js"></script>
+</body>
+</html>
