@@ -22,9 +22,9 @@ export const CONFIG = {
 
   githubUser: 'aidasdem-design',
 
-  // Set to the shared Gemini skill link once Google enables skill sharing;
-  // an "Open in Gemini" button appears on the submit page when this is filled.
-  geminiSkillUrl: '',
+  // Shared Gemini Gem running the interview. If emptied, "Open in Gemini"
+  // falls back to copying the prompt and opening a blank Gemini chat.
+  geminiGemUrl: 'https://gemini.google.com/gem/1S2bykcZUR7eNsCgnMrngiacLjI-MYy4R?usp=sharing',
 };
 
 // Sheet header → field key. Headers come from the Google Form question titles.

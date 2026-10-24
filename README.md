@@ -27,7 +27,8 @@ The project was planned and built in a conversation with Claude (in Claude Code)
 | 3 | Write to the Google Sheet directly | A static site can't write to a Sheet without a login or a backend | Use a **Google Form** as the way data gets in, and read the linked Sheet back |
 | 4 | Fully in-browser AI (Puter.js, Chrome's built-in Gemini Nano) | Puter makes users sign up for another service. Chrome's built-in model is limited and only available in some browsers. | Rejected |
 | 5 | Open a shared Gem in a pop-up and paste its summary back | Works without keys. A fixed summary format makes the paste reliable. | Adopted the **copy-and-paste** approach |
-| 6 | Share the Gem with users | In October 2026 Google replaced Gems with **skills**, and sharing skills isn't available yet | **Bring your own AI:** the site hands the interview prompt to ChatGPT, Claude, Gemini, Copilot or any assistant. A Gemini skill is ready to switch on once sharing launches. |
+| 6 | Share the Gem with users | Google is replacing Gems with **skills** (October 2026), and sharing for skills wasn't available. Rather than depend on one assistant, the site supports several. | **Bring your own AI:** the site hands the interview prompt to ChatGPT, Claude, Copilot or any assistant |
+| 7 | Add Gemini back | A shared Gem with the same instructions was created and works by link | **Open in Gemini** opens the shared Gem directly, next to the other assistants |
 
 The result is that the AI conversation happens in whatever assistant the person already uses. That also helps at companies that allow only one AI tool. The site's job is to start the interview and to read its output reliably.
 
@@ -60,7 +61,7 @@ It follows the visitor's light or dark setting and works at phone width.
 ### Submitting an idea
 
 1. **Name.** The user enters their first name and surname.
-2. **Interview.** "Open in ChatGPT" and "Open in Claude" are links with the whole interview prompt in the URL (`chatgpt.com/?q=…`, `claude.ai/new?q=…`), so the chat starts immediately. "Copy interview prompt" covers Gemini, Copilot and any other assistant.
+2. **Interview.** "Open in ChatGPT" and "Open in Claude" are links with the whole interview prompt in the URL (`chatgpt.com/?q=…`, `claude.ai/new?q=…`), so the chat starts immediately. "Open in Gemini" opens a shared Gemini Gem that already holds the interview instructions; the user types "Hi" to start. "Copy interview prompt" covers Copilot and any other assistant.
 3. **Paste.** The AI ends the interview with a block in a fixed format:
    ```
    === IDEA SUMMARY ===
@@ -144,7 +145,13 @@ Plain HTML, CSS and ES modules, with no build step and no dependencies apart fro
 
 ## Changing the interview
 
-The prompt lives in `assets/js/prompt.js`, and the skill version lives in `setup/automation-idea-coach/SKILL.md`. **Keep the summary labels identical in both**, because the paste parser depends on them. When Gemini skill sharing becomes available, put the skill's share link in `geminiSkillUrl` in `config.js`, and an "Open in Gemini" button appears on the submit page.
+The interview exists in three places, and **the summary labels must stay identical in all of them**, because the paste parser depends on them:
+
+- `assets/js/prompt.js`: the prompt used for ChatGPT, Claude and "Copy interview prompt"
+- the shared Gemini Gem, set up from `setup/gem-instructions.md` and linked through `geminiGemUrl` in `config.js`
+- `setup/automation-idea-coach/SKILL.md`: the Gemini skill version, for when Gems become skills
+
+Editing the Gem's instructions on Gemini doesn't change its share link. If `geminiGemUrl` is emptied, "Open in Gemini" falls back to copying the prompt and opening a blank Gemini chat.
 
 ## Known limitations
 
@@ -155,5 +162,5 @@ The prompt lives in `assets/js/prompt.js`, and the skill version lives in `setup
 
 ## Roadmap
 
-- "Open in Gemini" button once skills can be shared
+- When Google converts the Gem into a skill (from November 2026), check that the share link still works and update `geminiGemUrl` if it changes
 - Optional email or GitHub notification when an idea's status changes

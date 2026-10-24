@@ -1,6 +1,6 @@
 import { CONFIG } from './config.js';
 import { INTERVIEW_PROMPT } from './prompt.js';
-import { fetchSheetIdeas, getLocalIdeas, saveLocalIdea, submitIdea, newIdeaId, h } from './data.js';
+import { fetchSheetIdeas, getLocalIdeas, saveLocalIdea, submitIdea, newIdeaId } from './data.js';
 
 const form = document.getElementById('idea-form');
 const $ = id => document.getElementById(id);
@@ -12,9 +12,32 @@ $('open-chatgpt').href = `https://chatgpt.com/?q=${encoded}`;
 $('open-claude').href = `https://claude.ai/new?q=${encoded}`;
 $('prompt-text').textContent = INTERVIEW_PROMPT;
 
-if (CONFIG.geminiSkillUrl) {
-  $('ai-buttons').prepend(h('a', { class: 'btn btn--ink', href: CONFIG.geminiSkillUrl, target: '_blank', rel: 'noopener' },
-    'Open in Gemini ', h('span', { class: 'arrow', 'aria-hidden': 'true' }, '↗')));
+// The shared Gem already holds the interview instructions, so it only needs a
+// first message to start. Without a Gem, Gemini can't be opened with a prompt
+// pre-filled, so the button copies the prompt and opens a blank chat instead.
+const geminiBtn = $('open-gemini');
+const geminiStatus = $('gemini-status');
+if (CONFIG.geminiGemUrl) {
+  geminiBtn.href = CONFIG.geminiGemUrl;
+  geminiBtn.addEventListener('click', () => {
+    geminiStatus.textContent = 'Gemini opened in a new tab. Type “Hi” there to start the interview.';
+    geminiStatus.className = 'parse-status ok';
+  });
+} else {
+  geminiBtn.addEventListener('click', async e => {
+    e.preventDefault();
+    try {
+      // Copy before opening: the clipboard needs this tab to still have focus.
+      await navigator.clipboard.writeText(INTERVIEW_PROMPT);
+      geminiStatus.textContent = 'Prompt copied ✓ Paste it into Gemini (Ctrl+V / ⌘V) and press Enter.';
+      geminiStatus.className = 'parse-status ok';
+    } catch {
+      document.querySelector('.prompt-peek').open = true;
+      geminiStatus.textContent = 'Couldn’t copy automatically. Copy the prompt below and paste it into Gemini.';
+      geminiStatus.className = 'parse-status warn';
+    }
+    window.open(geminiBtn.href, '_blank', 'noopener');
+  });
 }
 
 $('copy-prompt').addEventListener('click', async e => {
